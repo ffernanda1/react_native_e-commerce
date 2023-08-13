@@ -13,7 +13,7 @@ const StackNagivator = () => {
                 <Stack.Screen
                     name="Login"
                     component={LoginScreen}
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="Register"
