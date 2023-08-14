@@ -41,14 +41,14 @@ const LoginScreen = () => {
             <TextInput
               value={email}
               onChangeText={(text) => setEmail(text)}
-              style={styles.textInputEmail}
+              style={styles.textInput}
               placeholder={"enter your E-mail"}
             />
 
           </View>
         </View>
 
-        <View style={{ marginTop: 10 }}>
+        <View >
           <View style={styles.view2}>
             <AntDesign
               style={styles.materialIcon}
@@ -58,7 +58,7 @@ const LoginScreen = () => {
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
-              style={styles.textInputPassword}
+              style={styles.textInput}
               placeholder={"enter your Password"}
             />
           </View>
@@ -84,7 +84,13 @@ const LoginScreen = () => {
           marginRight: "auto",
           padding: 15
         }}>
-          Login
+          <Text style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: 21
+          }}>
+            Login
+          </Text>
         </Pressable>
 
         <Pressable onPress={() => navigation.navigate("Register")} style={{ marginTop: 15 }}>
@@ -119,14 +125,8 @@ const styles = StyleSheet.create({
     marginTop: 12,
     color: "#041E42"
   },
-  textInputEmail: {
-    color: "gray",
-    marginVertical: 10,
-    width: 300,
-    fontSize: 16,
-  },
-  textInputPassword: {
-    color: "gray",
+  textInput: {
+    color: "#ababab",
     marginVertical: 10,
     width: 300,
     fontSize: 16,
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    backgroundColor: "D0D0D0",
+    backgroundColor: "#D0D0D0",
     paddingVertical: 5,
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: 30
   },
   materialIcon: {

@@ -1,6 +1,7 @@
 import {
   StyleSheet,
-  Text, View,
+  Text,
+  View,
   SafeAreaView,
   Image,
   KeyboardAvoidingView,
@@ -9,9 +10,15 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import { amazon } from '../assets'
-import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+
 const RegisterScreen = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [name, setName] = useState("")
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View>
@@ -23,10 +30,27 @@ const RegisterScreen = () => {
 
       <KeyboardAvoidingView>
         <View style={styles.view1}>
-          <Text style={styles.textLogin}>Login In to your Account</Text>
+          <Text style={styles.textLogin}>Register your Account</Text>
         </View>
 
         <View style={{ marginTop: 70 }}>
+
+          <View style={styles.view2}>
+            <Ionicons
+              style={styles.materialIcon}
+              name="person-sharp" size={24} color="black" />
+
+            <TextInput
+              value={name}
+              onChangeText={(text) => setName(text)}
+              style={styles.textInputEmail}
+              placeholder={"enter your Name"}
+            />
+
+          </View>
+        </View>
+
+        <View style={{ marginTop: 10 }}>
           <View style={styles.view2}>
             <MaterialIcons
               style={styles.materialIcon}
@@ -42,6 +66,7 @@ const RegisterScreen = () => {
           </View>
         </View>
 
+
         <View style={{ marginTop: 10 }}>
           <View style={styles.view2}>
             <AntDesign
@@ -54,6 +79,22 @@ const RegisterScreen = () => {
               secureTextEntry={true}
               style={styles.textInputPassword}
               placeholder={"enter your Password"}
+            />
+          </View>
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <View style={styles.view2}>
+            <AntDesign
+              style={styles.materialIcon}
+              name="lock1" size={24} color="black" />
+
+            <TextInput
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={true}
+              style={styles.textInputPassword}
+              placeholder={"enter your Password Again"}
             />
           </View>
         </View>
@@ -78,15 +119,18 @@ const RegisterScreen = () => {
           marginRight: "auto",
           padding: 15
         }}>
-          Login
+          <Text>
+            Login
+          </Text>
         </Pressable>
 
-        <Pressable onPress={() => navigation.navigate("Register")} style={{ marginTop: 15 }}>
+        <Pressable onPress={() => navigation.goBack()}>
           <Text style={{
             textAlign: "center",
             color: "grey",
             fontSize: 16
-          }}>Don't have an account ? Sign up</Text>
+          }}
+          >Already have an account ? Sign In</Text>
         </Pressable>
       </KeyboardAvoidingView>
 
@@ -131,9 +175,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    backgroundColor: "D0D0D0",
+    backgroundColor: "#D0D0D0",
     paddingVertical: 5,
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: 30
   },
   materialIcon: {
