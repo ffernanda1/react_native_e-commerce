@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
 const app = express();
 const port = 3001;
 const cors = require("cors");
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,7 +45,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
         from: "amazon.com",
         to: email,
         subject: "Email Verification",
-        text: `Please click the following link to verify your email : http://localhost:8000/verify/${verificationToken}`
+        text: `Please click the following link to verify your email : http://localhost:3001/verify/${verificationToken}`
     };
 
     //send email
@@ -66,7 +67,7 @@ app.post("/register", async (req, res) => {
             return res.status(400).json({ message: "Email already registered" })
         }
 
-        const newUser = new User({ firstName, lastName, email, password })
+        const newUser = new User({ name, email, password })
         //generate and store verification
         newUser.verificationToken = crypto.randomBytes(20).toString("hex");
 
