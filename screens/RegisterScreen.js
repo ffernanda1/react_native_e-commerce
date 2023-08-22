@@ -41,7 +41,7 @@ const RegisterScreen = () => {
     }).catch((error) => {
       Alert.alert(
         "Registration Failure",
-        "an error occurred: "
+        `an error occurred: ${error}`
       )
       console.log("register failed", error)
     })
