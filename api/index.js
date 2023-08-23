@@ -38,14 +38,18 @@ const sendVerificationEmail = async (email, verificationToken) => {
     //create a nodemailer transport 
     const transporter = nodemailer.createTransport({
         //configure the email service
-
+        service:'gmail',
+        auth: {
+            user:"mangorifernanda@gmail.com",
+            pass:"mjtwetitsdujwtvy"
+        }
     });
 
     const mailOptions = {
         from: "amazon.com",
         to: email,
         subject: "Email Verification",
-        text: `Please click the following link to verify your email : http://localhost:3001/verify/${verificationToken}`
+        text: `Please click the following link to verify your email : http://192.168.1.67:3001/verify/${verificationToken}`
     };
 
     //send email
@@ -70,17 +74,13 @@ app.post("/register", async (req, res) => {
         const newUser = new User({ name, email, password })
         //generate and store verification
         newUser.verificationToken = crypto.randomBytes(20).toString("hex");
-
         //save the user to database
         await newUser.save();
 
         //send Verification email to the user
 
         sendVerificationEmail(newUser.email, newUser.verificationToken);
-
-
     } catch (error) {
-
         console.log("Error registering", error)
         res.status(500).json({ message: "registration failed" })
     }

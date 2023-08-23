@@ -21,6 +21,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("")
   const [name, setName] = useState("")
   const navigation = useNavigation();
+
   const handleRegister = () => {
     const user = {
       name: name,
@@ -29,22 +30,24 @@ const RegisterScreen = () => {
     };
 
     //send a post request to the backend API
-    axios.post("http://localhost:8000/register", user).then((response) => {
-      console.log(response);
-      Alert.alert(
-        "Registration Successfully",
-        "You have registered successfully"
-      );
-      setName("")
-      setPassword("")
-      setEmail("")
-    }).catch((error) => {
-      Alert.alert(
-        "Registration Failure",
-        `an error occurred: ${error}`
-      )
-      console.log("register failed", error)
-    })
+    axios
+      .post("http://192.168.1.67:3001/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registration Successfully",
+          "You have registered successfully"
+        );
+        setName("")
+        setPassword("")
+        setEmail("")
+      }).catch((error) => {
+        Alert.alert(
+          "Registration Failure",
+          `an error occurred: ${error}`
+        );
+        console.log(error.response)
+      })
   }
 
   return (
@@ -137,9 +140,13 @@ const RegisterScreen = () => {
 
           <Pressable
             onPress={handleRegister}
-            style={styles.pressLogin}>
-            <Text>
-              Login
+            style={styles.pressRegister}>
+            <Text style={{
+              textAlign: "center",
+              color: "black",
+              fontSize: 21
+            }}>
+              Register
             </Text>
           </Pressable>
 
@@ -187,7 +194,7 @@ const styles = StyleSheet.create({
     width: 300,
     fontSize: 16,
   },
-  pressLogin: {
+  pressRegister: {
     width: 200,
     backgroundColor: "#FEBE10",
     borderRadius: 6,
