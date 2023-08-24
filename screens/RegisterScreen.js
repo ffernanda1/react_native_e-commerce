@@ -30,92 +30,91 @@ const RegisterScreen = () => {
     };
 
     //send a post request to the backend API
-    axios
-      .post("http://192.168.1.67:3001/register", user)
+    axios.post("http://192.168.1.67:3001/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(
           "Registration Successfully",
           "You have registered successfully"
         );
-        setName("")
-        setPassword("")
-        setEmail("")
-      }).catch((error) => {
+        setName("");
+        setPassword("");
+        setEmail("");
+      })
+      .catch((error) => {
         Alert.alert(
           "Registration Failure",
-          `an error occurred: ${error}`
+          `An error occurred: ${error}`
         );
-        console.log(error.response)
-      })
+        console.log(error.response);
+      });
   }
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
-          <Image
-            style={styles.images}
-            source={amazon}
-          />
+      <View>
+        <Image
+          style={styles.images}
+          source={amazon}
+        />
+      </View>
+
+      <KeyboardAvoidingView>
+        <View style={styles.view1}>
+          <Text style={styles.textLogin}>Register your Account</Text>
         </View>
 
-        <KeyboardAvoidingView>
-          <View style={styles.view1}>
-            <Text style={styles.textLogin}>Register your Account</Text>
+        <View style={{ marginTop: 70 }}>
+
+          <View style={styles.view2}>
+            <Ionicons
+              style={styles.materialIcon}
+              name="person-sharp" size={24} color="black" />
+
+            <TextInput
+              value={name}
+              onChangeText={(text) => setName(text)}
+              style={styles.textInputEmail}
+              placeholder={"enter your Name"}
+            />
+
           </View>
+        </View>
 
-          <View style={{ marginTop: 70 }}>
+        <View style={{ marginTop: 10 }}>
+          <View style={styles.view2}>
+            <MaterialIcons
+              style={styles.materialIcon}
+              name="email" size={24} color="black" />
 
-            <View style={styles.view2}>
-              <Ionicons
-                style={styles.materialIcon}
-                name="person-sharp" size={24} color="black" />
+            <TextInput
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              style={styles.textInputEmail}
+              placeholder={"enter your E-mail"}
+            />
 
-              <TextInput
-                value={name}
-                onChangeText={(text) => setName(text)}
-                style={styles.textInputEmail}
-                placeholder={"enter your Name"}
-              />
-
-            </View>
           </View>
+        </View>
 
-          <View style={{ marginTop: 10 }}>
-            <View style={styles.view2}>
-              <MaterialIcons
-                style={styles.materialIcon}
-                name="email" size={24} color="black" />
 
-              <TextInput
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                style={styles.textInputEmail}
-                placeholder={"enter your E-mail"}
-              />
+        <View style={{ marginTop: 10 }}>
+          <View style={styles.view2}>
+            <AntDesign
+              style={styles.materialIcon}
+              name="lock1" size={24} color="black" />
 
-            </View>
+            <TextInput
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={true}
+              style={styles.textInputPassword}
+              placeholder={"enter your Password"}
+            />
           </View>
+        </View>
 
-
-          <View style={{ marginTop: 10 }}>
-            <View style={styles.view2}>
-              <AntDesign
-                style={styles.materialIcon}
-                name="lock1" size={24} color="black" />
-
-              <TextInput
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry={true}
-                style={styles.textInputPassword}
-                placeholder={"enter your Password"}
-              />
-            </View>
-          </View>
-
-          {/*<View style={{ marginTop: 10 }}>
+        {/*<View style={{ marginTop: 10 }}>
             <View style={styles.view2}>
               <AntDesign
                 style={styles.materialIcon}
@@ -131,35 +130,34 @@ const RegisterScreen = () => {
             </View>
   </View>*/}
 
-          <View style={styles.view3}>
-            <Text>Keep me logged in</Text>
+        <View style={styles.view3}>
+          <Text>Keep me logged in</Text>
 
-            <Text style={{ color: "#007FFF", fontWeight: "500" }}> Forgot Password</Text>
-          </View>
-          <View style={{ marginTop: 70 }} />
+          <Text style={{ color: "#007FFF", fontWeight: "500" }}> Forgot Password</Text>
+        </View>
+        <View style={{ marginTop: 70 }} />
 
-          <Pressable
-            onPress={handleRegister}
-            style={styles.pressRegister}>
-            <Text style={{
-              textAlign: "center",
-              color: "black",
-              fontSize: 21
-            }}>
-              Register
-            </Text>
-          </Pressable>
+        <Pressable
+          onPress={handleRegister}
+          style={styles.pressRegister}>
+          <Text style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: 21
+          }}>
+            Register
+          </Text>
+        </Pressable>
 
-          <Pressable onPress={() => navigation.goBack()}>
-            <Text style={{
-              textAlign: "center",
-              color: "grey",
-              fontSize: 16
-            }}
-            >Already have an account ? Sign In</Text>
-          </Pressable>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        <Pressable onPress={() => navigation.goBack()}>
+          <Text style={{
+            textAlign: "center",
+            color: "grey",
+            fontSize: 16
+          }}
+          >Already have an account ? Sign In</Text>
+        </Pressable>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
@@ -173,6 +171,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   images: {
+    marginTop: 20,
     width: 150,
     height: 100
   },

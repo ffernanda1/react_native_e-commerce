@@ -38,10 +38,10 @@ const sendVerificationEmail = async (email, verificationToken) => {
     //create a nodemailer transport 
     const transporter = nodemailer.createTransport({
         //configure the email service
-        service:'gmail',
+        service: 'gmail',
         auth: {
-            user:"mangorifernanda@gmail.com",
-            pass:"mjtwetitsdujwtvy"
+            user: "mangorifernanda@gmail.com",
+            pass: "mjtwetitsdujwtvy"
         }
     });
 
@@ -60,6 +60,12 @@ const sendVerificationEmail = async (email, verificationToken) => {
 
     }
 }
+const generateSecretKey = () => {
+    const secretKey = crypto.randomBytes(32).toString("hex");
+    return secretKey
+}
+
+const secretKey = generateSecretKey()
 
 //endpoint to register in the app
 app.post("/register", async (req, res) => {
@@ -109,3 +115,29 @@ app.get('/verify/:token', async (req, res) => {
         res.status(500).json({ message: "email verification failed" })
     }
 });
+
+//endpoint to login the user
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        //check if the user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: "Invalid email or password" })
+        }
+
+        //check if the passowrd is correct
+        if (user.password !== password) {
+            return res.status(401).json({ message: 'Invalid password' })
+
+        }
+
+        //generate token
+        const token = jwt.sign({ userId: user._id }, secretKey);
+
+        res.status(200).json({token})
+    } catch (error) {
+        res.status(500).json({ messageL: "login failed" })
+    }
+})
