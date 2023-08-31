@@ -26,7 +26,7 @@ const LoginScreen = () => {
         const token = await AsyncStorage.getItem("authToken");
 
         if (token) {
-          navigation.replace("Login");
+          navigation.replace("Home");
         }
       } catch (err) {
         console.log("error message", err);
@@ -46,7 +46,7 @@ const LoginScreen = () => {
         console.log(response);
         const token = response.data.token;
         AsyncStorage.setItem("authToken", token);
-        navigation.replace("Login");
+        navigation.replace("Home");
       })
       .catch((error) => {
         Alert.alert("Login Error", "Invalid Email");

@@ -55,6 +55,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
     //send email
     try {
         await transporter.sendMail(mailOptions);
+        console.log("verification email sent successfully")
     } catch (error) {
         console.log({ message: 'error sending verification email', error })
 
@@ -74,18 +75,28 @@ app.post("/register", async (req, res) => {
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
+            console.log("email already registered:", email);
             return res.status(400).json({ message: "Email already registered" })
         }
 
         const newUser = new User({ name, email, password })
+
         //generate and store verification
         newUser.verificationToken = crypto.randomBytes(20).toString("hex");
+
         //save the user to database
         await newUser.save();
 
-        //send Verification email to the user
+        console.log("New User Registered:", newUser);
 
+
+        //send Verification email to the user
         sendVerificationEmail(newUser.email, newUser.verificationToken);
+
+        res.status(201).json({
+            message:
+                "Registration successful. Please check your email for verification.",
+        });
     } catch (error) {
         console.log("Error registering", error)
         res.status(500).json({ message: "registration failed" })
@@ -104,6 +115,7 @@ app.get('/verify/:token', async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "Invalid verification token" });
         };
+        
         //Mark the user as verified
         user.verified = true;
         user.verificationToken = undefined;
@@ -136,7 +148,7 @@ app.post("/login", async (req, res) => {
         //generate token
         const token = jwt.sign({ userId: user._id }, secretKey);
 
-        res.status(200).json({token})
+        res.status(200).json({ token })
     } catch (error) {
         res.status(500).json({ messageL: "login failed!!" })
     }
