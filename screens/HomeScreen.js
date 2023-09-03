@@ -29,7 +29,7 @@ import jwt_decode from "jwt-decode";
 const HomeScreen = () => {
   return (
     <View>
-      <Text>HomeScreen</Text>
+    
     </View>
   )
 }
